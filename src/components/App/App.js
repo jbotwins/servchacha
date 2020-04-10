@@ -24,7 +24,7 @@ class App extends Component {
 	}
 
 	fetchPopular = () => {
-		fetch("https://www.reddit.com/subreddits/popular.json")
+		fetch("http://www.reddit.com/subreddits/popular.json")
 			.then(response => response.json())
 			.then(data => {
 				this.setState({
@@ -46,7 +46,7 @@ class App extends Component {
 		if (this.state.fetchedPopular === false && uri === "/") {
 			this.fetchPopular();
 		} else {
-			const url = "https://www.reddit.com" + uri + '.json'
+			const url = "http://www.reddit.com" + uri + '.json'
 			fetch(url)
 				.then(response => response.json())
 				.then(data => {
