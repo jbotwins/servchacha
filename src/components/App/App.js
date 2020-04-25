@@ -49,6 +49,7 @@ class App extends Component {
 			this.fetchPopular();
 		} else if (this.state.searchActive === true) {
 			if (this.state.query.length > 1) {
+				// a satifactory search was detected. fetch data and update state.
 				const uri = "/subreddits/search.json?q=" + this.state.query;
 				const url = "https://www.reddit.com" + uri;
 				fetch(url)
@@ -69,6 +70,7 @@ class App extends Component {
 					}
 				});
 			} else {
+				// an empty search was detected
 				this.setState({
 					searchActive: false,
 					currentContentType: "search-error"
@@ -118,9 +120,10 @@ class App extends Component {
 				this.updateHistory(this.state.currentPathName)
 			}
 
-			// these if statements allow this one function to handle the inital grab of data and following updates
+			// These statements allow this one function to handle the inital grab of data and following updates
+
 			if (val === undefined && this.state.searchActive === true) {
-				// this.updateHistory(this.state.currentPathName)
+				// user ran a search
 				this.setState({
 					currentContentType: "search"
 				}, () => {
@@ -129,6 +132,7 @@ class App extends Component {
 				})
 			}
 			if (val === undefined) {
+				// user navigated by clicking a link, or its the initial page load
 				const pathname = window.location.pathname;
 				this.setState({
 					currentPathName: pathname
@@ -148,6 +152,7 @@ class App extends Component {
 					this.fetchDataUri()
 				})
 			} else {
+				// non search related path detected. user clicked a link
 				this.setState({
 					currentPathName: val
 				}, () => {
@@ -160,10 +165,12 @@ class App extends Component {
 	}
 
 	onSearch = () => {
+		// set the table for a search
 		this.setState({
 			searchData: [],
 			searchActive: true
 		}, () => {
+			// update data
 			this.updateData()
 			}
 		)
